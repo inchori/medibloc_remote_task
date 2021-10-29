@@ -13,6 +13,15 @@ public class UserResponse {
         private Long id;
         private String name;
         private Long amount;
+
+        public static UserResponse.Deposit build(UserAccount userAccount) {
+            DepositBuilder depositBuilder = Deposit.builder()
+                    .id(userAccount.getId())
+                    .name(userAccount.getName())
+                    .amount(userAccount.getAmount());
+
+            return depositBuilder.build();
+        }
     }
 
     @Getter

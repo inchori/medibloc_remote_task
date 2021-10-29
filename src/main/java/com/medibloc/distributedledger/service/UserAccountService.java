@@ -16,9 +16,9 @@ public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
-    @Transactional(readOnly = false)
-    public void depositDollars(UserRequest.Deposit request) {
-
+    public UserResponse.Deposit depositDollars(UserRequest.Deposit request) {
+        UserAccount depositAccount = userAccountRepository.save(UserAccount.deposit(request));
+        return UserResponse.Deposit.build(depositAccount);
     }
 
     @Transactional(readOnly = true)
