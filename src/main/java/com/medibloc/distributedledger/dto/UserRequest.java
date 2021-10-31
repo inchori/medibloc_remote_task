@@ -11,7 +11,7 @@ public class UserRequest {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Deposit {
         private String name;
-        private Long amount;
+        private long amount;
     }
 
     @Getter

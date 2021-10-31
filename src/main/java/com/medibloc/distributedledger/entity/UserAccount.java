@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "user_account")
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserAccount {
 

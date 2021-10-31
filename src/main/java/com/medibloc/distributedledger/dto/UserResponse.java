@@ -12,7 +12,7 @@ public class UserResponse {
     public static class Deposit {
         private Long id;
         private String name;
-        private Long amount;
+        private long amount;
 
         public static UserResponse.Deposit build(UserAccount userAccount) {
             DepositBuilder depositBuilder = Deposit.builder()
@@ -31,7 +31,7 @@ public class UserResponse {
     public static class GetBalance {
         private Long id;
         private String name;
-        private Long balance;
+        private long balance;
 
         public static GetBalance build(UserAccount userAccount) {
             GetBalanceBuilder getBalanceBuilder = GetBalance.builder()
