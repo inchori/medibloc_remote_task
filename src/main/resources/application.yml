@@ -1,9 +1,18 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user_account?useSSL=false&serverTimezone=Asia/Seoul
-    username: root
-    password:
+    master:
+      hikari:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/user_account?useSSL=false&serverTimezone=Asia/Seoul
+        username: root
+        password: password
+
+    slave:
+      hikari:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3307/user_account?useSSL=false&serverTimezone=Asia/Seoul
+          username: root
+          password: password
 
   jpa:
     hibernate:
@@ -11,3 +20,4 @@ spring:
     properties:
       hibernate:
         show_sql: true
+

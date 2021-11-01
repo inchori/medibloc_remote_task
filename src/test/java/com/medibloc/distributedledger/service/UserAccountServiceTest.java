@@ -11,11 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UserAccountServiceTest {
@@ -26,10 +27,9 @@ class UserAccountServiceTest {
     @InjectMocks
     private UserAccountService userAccountService;
 
-
     @Test
     @DisplayName("Deposit US Dollars")
-    public void deposit() throws Exception {
+    public void deposit() {
         //given
         UserRequest.Deposit request = UserRequest.Deposit.builder()
                 .name("Song InChul")
@@ -46,11 +46,12 @@ class UserAccountServiceTest {
         assertEquals(userAccount.getId(), createdAccount.getId());
         assertEquals(userAccount.getName(), createdAccount.getName());
         assertEquals(userAccount.getAmount(), createdAccount.getAmount());
+
     }
 
     @Test
     @DisplayName("Get User Balance")
-    public void getBalance() throws Exception {
+    public void getBalance() {
         //given
         UserAccount userAccount = UserAccount.builder()
                 .id(1L)
