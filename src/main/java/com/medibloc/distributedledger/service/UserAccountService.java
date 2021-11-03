@@ -18,8 +18,10 @@ public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
-    @Transactional(readOnly = false)
     public UserResponse.Deposit depositDollars(UserRequest.Deposit request) {
+        if (userAccountRepository.existsByName(request.getName())) {
+            throw new IllegalStateException("The use is already exist.");
+        }
         UserAccount depositAccount = userAccountRepository.save(UserAccount.deposit(request));
         return UserResponse.Deposit.build(depositAccount);
     }
