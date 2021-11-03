@@ -1,6 +1,7 @@
 package com.medibloc.distributedledger.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@Slf4j
 public class DataSourceConfiguration {
     public static final String MASTER_DATASOURCE = "masterDataSource";
     public static final String SLAVE_DATASOURCE = "slaveDataSource";
@@ -33,18 +35,13 @@ public class DataSourceConfiguration {
     }
 
     @Bean
-    @Primary
     @DependsOn({MASTER_DATASOURCE, SLAVE_DATASOURCE})
     public DataSource routingDataSource(@Qualifier(MASTER_DATASOURCE) DataSource masterDataSource,
                                         @Qualifier(SLAVE_DATASOURCE) DataSource slaveDataSource) {
         RoutingDataSource routingDataSource = new RoutingDataSource();
-        Map<Object, Object> dataSourceMap = new HashMap<>() {
-            {
-                put("master", masterDataSource);
-                put("slave", slaveDataSource);
-            }
-        };
-
+        Map<Object, Object> dataSourceMap = new HashMap<>();
+        dataSourceMap.put("master", masterDataSource);
+        dataSourceMap.put("slave", slaveDataSource);
         routingDataSource.setTargetDataSources(dataSourceMap);
         routingDataSource.setDefaultTargetDataSource(masterDataSource);
 
@@ -52,6 +49,7 @@ public class DataSourceConfiguration {
     }
 
     @Bean
+    @Primary
     @DependsOn(value = "routingDataSource")
     public LazyConnectionDataSourceProxy dataSource(DataSource routingDataSource) {
         return new LazyConnectionDataSourceProxy(routingDataSource);
